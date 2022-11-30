@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Scanner;
 
 
 public class Main {
@@ -24,15 +25,24 @@ public class Main {
 		
 		try(Connection con = DriverManager.getConnection(URL, USER, PASSWORD)){
 			
-			final String sql = " SELECT countries.country_id, countries.name AS country, regions.name AS region, continents.name AS continent "
-								+ " FROM countries "
-								+ "	JOIN regions "
-								+ "	ON countries.region_id = regions.region_id "
-								+ "	JOIN continents "
-								+ "	ON regions.continent_id = continents.continent_id "
-								+ " ORDER BY countries.name ";
+			final String sql = "SELECT countries.country_id, countries.name AS country, regions.name AS region, continents.name AS continent "
+							 + " FROM countries "
+							 + " JOIN regions "
+							 + " ON countries.region_id = regions.region_id "
+							 + " JOIN continents "
+							 + " ON regions.continent_id = continents.continent_id "
+							 + " WHERE countries.name LIKE ? "
+							 + " ORDER BY country ";
 						
 			try(PreparedStatement ps = con.prepareStatement(sql)){
+				
+				Scanner sc = new Scanner(System.in);
+				System.out.println("Inserire nome Paese da ricercare: ");
+				String res = sc.nextLine();
+				sc.close();
+				
+				res = "Italy";
+				ps.setString(1, res);
 				
 				try(ResultSet rs = ps.executeQuery()){
 					
