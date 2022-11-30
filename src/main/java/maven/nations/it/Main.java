@@ -38,25 +38,25 @@ public class Main {
 				
 				Scanner sc = new Scanner(System.in);
 				System.out.println("Inserire nome Paese da ricercare: ");
-				String res = sc.nextLine();
+				String res = "%" + sc.nextLine().toLowerCase() + "%";
 				sc.close();
 				
-				res = "Italy";
 				ps.setString(1, res);
 				
 				try(ResultSet rs = ps.executeQuery()){
-					
-					while(rs.next()) {
 						
-						final int id = rs.getInt(1);
-						final String country = rs.getString(2);
-						final String region = rs.getString(3);
-						final String continent = rs.getString(4);
-						
-						System.out.println(id + " - " + country + " - " + region + " - " + continent);
-					}
+						while(rs.next()) {
+							
+							final int id = rs.getInt(1);
+							final String country = rs.getString(2);
+							final String region = rs.getString(3);
+							final String continent = rs.getString(4);
+							
+							System.out.println(id + " - " + country + " - " + region + " - " + continent);
+						} 
 					
 					System.out.println();
+						
 				}
 			}
 			
